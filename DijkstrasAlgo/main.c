@@ -4,7 +4,7 @@ int getNumVerticies(FILE *graph){
         char line[512];
         int verticies = 0;
         while(fgets(line, sizeof(line), graph) != NULL){
-            verticies = line;
+            verticies = line;// the number of points is the number in the first row of the text file
             //printf(verticies);
             break;
         }
@@ -25,7 +25,7 @@ int getNumVerticies(FILE *graph){
 
 }*/
 int main() {
-    FILE *graph = fopen("C:\\Users\\krish\\Downloads\\Dijkstra_Data_6.txt","r");
+    FILE *graph = fopen("Dijkstra_Data_6.txt","r");
     int points = getNumVerticies(graph);
     //int graphPoints[points][points];
     printf(points);
