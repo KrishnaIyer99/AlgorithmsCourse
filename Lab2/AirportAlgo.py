@@ -15,6 +15,8 @@ import numpy as np
 import array
 import pandas as pd
 import math
+from itertools import *
+
 INFINITY = float("inf")
 
 with open('2019_Lab_2_flights_test_data.txt') as file:
@@ -95,29 +97,47 @@ prev = {
             "depart":-1,
             "arrive":-1
         }
-
-for i in schedule_df.index:
+source_df = schedule_df[schedule_df["source"] == A]
+for i in source_df.index:
     x = {
-            "source": schedule_df['source'][i],
-            "dest": schedule_df['dest'][i],
-            "depart":schedule_df['depart'][i],
-            "arrive":schedule_df['arrive'][i]
+            "source": source_df['source'][i],
+            "dest": source_df['dest'][i],
+            "depart":source_df['depart'][i],
+            "arrive":source_df['arrive'][i]
             }
-    if(x["source"] == prev["source"]):
-        if(x["arrive"] < prev["arrive"]):
-            estimate[x["dest"]] = x["arrive"]
-            candidate[x["dest"]] = True
-    elif(candidate[x["source"]] and (x["arrive"] < estimate[x["dest"]])):
+    if(x["arrive"] < prev["arrive"] or prev["arrive"] == -1):
         estimate[x["dest"]] = x["arrive"]
-        candidate[x["dest"]] = True
         candidate[prev["dest"]] = False
-        reached[prev["dest"]] = True
-        predecessor[x["source"]] = prev["source"]
+        candidate[x["dest"]] = True
     prev = x
-        
-best_candidate = 99999
+predecessor[A] = -1
 num_reach = reached.count(True)
-#while num_reach != arraySize:
+while (not reached[target]):
+    best_candidate = 99999
+    v = 1
+    #break
+    for i in range(arraySize):
+        if(candidate[i] and estimate[i] < best_candidate):
+            v = i
+            best_candidate = estimate[i]
+    if(best_candidate == 99999):
+        print("City is unreachable")
+        break
+    cost[v] = estimate[v]
+    reached[v] = True
+    candidate[v] = False
+    v_df = schedule_df[schedule_df["source"] == v]
+    for z in v_df.index:
+        if((v_df["depart"][z] > estimate[v]) and (not reached[v_df["dest"][z]])):
+            candidate[v_df["dest"][z]] = True
+        if((v_df["arrive"][z] < estimate[v_df["dest"][z]]) and (candidate[v_df["dest"][z]])):
+            estimate[v_df["dest"][z]] = v_df["arrive"][z]
+            predecessor[v_df["dest"][z]] = v
+        
+    
+            
+        
+    
     
             
     
