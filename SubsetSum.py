@@ -94,14 +94,16 @@ def HS_subset_sum(S, k):
         if((sl, sr) != (-1, -1)):
             right_idx = pd_right.loc[pd_right["Sum"] == sr]
             left_idx = pd_left.loc[pd_left["Sum"] == sl]
-            return(left_idx, right_idx)
+            return(left_idx.iloc[0], right_idx.iloc[0])
         else:
             return "No subsets found"
 
 Set = [3,5,3,9,18,4,5,6]
 
-output = HS_subset_sum(Set, 13)
-print(output)
+output = HS_subset_sum(Set, 21)
+output_set = output[0]["Set"] + output[1]["Set"]
+output_sum = output[0]["Sum"] + output[1]["Sum"]
+print(str(output_set) + ": " + str(output_sum))
     
             
             
