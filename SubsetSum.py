@@ -203,7 +203,6 @@ def HS_subset_sum(S, k):
             # return rows from dataframe with the correct sum value (also return counter)
             right_idx = pd_right.loc[pd_right["Sum"] == sr]
             left_idx = pd_left.loc[pd_left["Sum"] == sl]
-            print(count)
             return(left_idx.iloc[0], right_idx.iloc[0]), count
         else:
             #if target is still not found
@@ -249,9 +248,34 @@ print(counts_HS)
 print("BFI Operations")
 print(counts_BFI)
 
-     
-        
-        
+"""
+Sample Output:
+
+HS Operations:
+[(42.61578947368421, 4), (113.15789473684211, 5), (123.22631578947369, 6), (288.13684210526316, 7), (283.3157894736842, 8), (685.2947368421053, 9), (651.8421052631579, 10), (1336.0526315789473, 11), (1371.6052631578948, 12), (3325.221052631579, 13), (2921.4, 14)]
+BFI Operations
+[(33.23684210526316, 4), (60.7, 5), (117.97368421052632, 6), (219.50526315789475, 7), (400.16315789473686, 8), (785.0, 9), (1341.1315789473683, 10), (2319.8736842105263, 11), (4531.88947368421, 12), (10751.494736842105, 13), (16478.22105263158, 14)]
+
+"""
+
+
+
+"""
+
+Q/A - write up
+
+Q: Do your observations support the theoretical predictions that BFI_Subset_Sum is in O(2^n) and HS_Subset_Sum is in O(n*2^n/2)?
+
+A: Yes I do support the theoretical production because when you convert these functions from
+   Big-O to regular functions BFI is y = 2^x and HS is y = x*2^(x/2). When analyzing the behaviour
+   of these 2 functions it shows that 2^x is less than x*2^(x/2) for smaller values.
+   However, once x becomes larger x*2^(x/2) becomes smaller than 2^x. This is seen in the 
+   output of my experimentation results as the BFI function has fewer operations than the HS function
+   until n = 7. With exceptions to a few results, it HS takes fewer operations than BFI as 
+   the size of the set continues to grow.
+"""
+
+
         
 
             
